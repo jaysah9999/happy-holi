@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Holi 🌈</title>
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(-45deg, #ff0000, #000000, #a23b85, #a6c1ee);
+      background-size: 400% 400%;
+      animation: gradient 10s ease infinite;
+    }
+
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .card {
+      text-align: center;
+      padding: 50px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(20px);
+      color: white;
+      box-shadow: 0 0 40px rgba(255,255,255,0.4);
+    }
+
+    h1 {
+      font-size: 45px;
+      margin-bottom: 20px;
+      text-shadow: 0 0 25px white;
+    }
+
+    #lyrics {
+      font-size: 22px;
+      min-height: 30px;
+      border-right: 2px solid white;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .heart {
+      position: absolute;
+      color: rgba(255,255,255,0.6);
+      font-size: 20px;
+      animation: float 6s linear infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(100vh); }
+      100% { transform: translateY(-10vh); }
+    }
+
+    .music-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 20px;
+      background: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- 🎵 Audio -->
+  <audio id="bgMusic" autoplay loop>
+    <source src="video_20260302_211020_edit.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="card">
+    <h1>🌈 Happy Holi 💖</h1>
+    <div id="lyrics"></div>
+    <button class="music-btn" onclick="toggleMusic()">🔊 Play / Pause Music</button>
+  </div>
+
+  <script>
+    const lines = [
+      "Balam pichkari jo tune mujhe maari 🎶",
+      "Toh seedhi saadhi chhori sharaabi ho gayi 💃",
+      "Haa jeance pehn kar jo tune maara thumka 🌸",
+      "Toh lattoo padosan ki bhabhi ho gayi 🌈"
+    ];
+
+    let lineIndex = 0;
+    let charIndex = 0;
+    const speed = 80;
+    const lyricsEl = document.getElementById("lyrics");
+
+    function typeWriter() {
+      if (charIndex < lines[lineIndex].length) {
+        lyricsEl.textContent += lines[lineIndex].charAt(charIndex);
+        charIndex++;
+        setTimeout(typeWriter, speed);
+      } else {
+        setTimeout(() => {
+          lyricsEl.textContent = "";
+          charIndex = 0;
+          lineIndex = (lineIndex + 1) % lines.length;
+          typeWriter();
+        }, 1500);
+      }
+    }
+
+    typeWriter();
+
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.innerHTML = "💖";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = Math.random() * 20 + 15 + "px";
+      heart.style.animationDuration = Math.random() * 3 + 3 + "s";
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 6000);
+    }
+
+    setInterval(createHeart, 500);
+
+    // 🎵 Music Control
+    const music = document.getElementById("bgMusic");
+
+    function toggleMusic() {
+      if (music.paused) {
+        music.play();
+      } else {
+        music.pause();
+      }
+    }
+
+  </script>
+
+</body>
+</html>
